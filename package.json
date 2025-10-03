@@ -14,9 +14,9 @@
   "author": "Pinecone",
   "license": "MIT",
   "dependencies": {
-    "zapier-platform-core": "15.0.0"
+    "zapier-platform-core": "17.7.2"
   },
   "devDependencies": {
-    "zapier-platform-cli": "15.0.0"
+    "zapier-platform-cli": "17.7.2"
   }
 }
