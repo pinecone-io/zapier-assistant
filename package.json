@@ -1,0 +1,22 @@
+{
+  "name": "zapier-assistant",
+  "version": "1.0.0",
+  "description": "A Zapier integration for Pinecone",
+  "main": "index.js",
+  "scripts": {
+    "test": "node node_modules/.bin/zapier test"
+  },
+  "keywords": [
+    "zapier",
+    "zapier-app",
+    "pinecone"
+  ],
+  "author": "Pinecone",
+  "license": "MIT",
+  "dependencies": {
+    "zapier-platform-core": "15.0.0"
+  },
+  "devDependencies": {
+    "zapier-platform-cli": "15.0.0"
+  }
+}
