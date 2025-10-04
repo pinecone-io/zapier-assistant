@@ -8,7 +8,7 @@ const newFile = {
   },
 
   operation: {
-    type: 'poll',
+    type: 'polling',
 
     inputFields: [
       {

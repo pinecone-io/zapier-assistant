@@ -9,6 +9,14 @@ const listAssistants = {
 
   operation: {
     inputFields: [
+      {
+        key: 'limit',
+        required: false,
+        type: 'integer',
+        label: 'Limit',
+        helpText: 'Maximum number of assistants to return',
+        default: '50'
+      }
     ],
 
     perform: (z, bundle) => {
@@ -18,7 +26,11 @@ const listAssistants = {
       });
 
       return promise.then((response) => {
-        return response.json.assistants || [];
+        const assistants = response.json.assistants || [];
+        return assistants.map(assistant => ({
+          id: assistant.name,
+          label: assistant.name
+        }));
       });
     },
 

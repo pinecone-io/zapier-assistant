@@ -38,7 +38,11 @@ const listFiles = {
       });
 
       return promise.then((response) => {
-        return response.json.files || [];
+        const files = response.json.files || [];
+        return files.map(file => ({
+          id: file.id,
+          label: file.name
+        }));
       });
     },
 

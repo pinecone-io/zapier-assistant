@@ -3,6 +3,7 @@ const createAssistant = require('./creates/assistant');
 const uploadDocument = require('./creates/document');
 const updateAssistant = require('./creates/updateAssistant');
 const deleteAssistant = require('./creates/deleteAssistant');
+const listProjects = require('./searches/listProjects');
 const listAssistants = require('./searches/assistant');
 const describeAssistant = require('./searches/assistantStatus');
 const listFiles = require('./searches/files');
@@ -39,6 +40,7 @@ module.exports = {
 
   // If you want to define a search to go along with your creates...
   searches: {
+    [listProjects.key]: listProjects,
     [listAssistants.key]: listAssistants,
     [describeAssistant.key]: describeAssistant,
     [listFiles.key]: listFiles,

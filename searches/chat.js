@@ -3,7 +3,7 @@ const chatAssistant = {
   noun: 'Chat',
 
   display: {
-    label: 'Chat with Assistant',
+    label: 'Chat With Assistant',
     description: 'Chat with an assistant and get back citations in structured form.'
   },
 
@@ -45,7 +45,7 @@ const chatAssistant = {
         type: 'number',
         label: 'Temperature',
         helpText: 'Controls randomness: 0 = deterministic, higher = more creative',
-        default: 0
+        default: '0'
       },
       {
         key: 'stream',
@@ -53,7 +53,7 @@ const chatAssistant = {
         type: 'boolean',
         label: 'Stream Response',
         helpText: 'If true, returns a stream of responses',
-        default: false
+        default: 'false'
       },
       {
         key: 'json_response',
@@ -61,7 +61,7 @@ const chatAssistant = {
         type: 'boolean',
         label: 'JSON Response',
         helpText: 'If true, assistant will return a JSON response',
-        default: false
+        default: 'false'
       },
       {
         key: 'include_highlights',
@@ -69,7 +69,7 @@ const chatAssistant = {
         type: 'boolean',
         label: 'Include Highlights',
         helpText: 'If true, returns highlights from referenced documents',
-        default: false
+        default: 'false'
       },
       {
         key: 'filter',

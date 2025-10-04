@@ -8,7 +8,7 @@ const newAssistant = {
   },
 
   operation: {
-    type: 'poll',
+    type: 'polling',
 
     perform: (z, bundle) => {
       const promise = z.request({

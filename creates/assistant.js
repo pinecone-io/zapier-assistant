@@ -1,3 +1,5 @@
+const { getPostHeaders } = require('../utils/headers');
+
 const createAssistant = {
   key: 'assistant',
   noun: 'Assistant',
@@ -40,9 +42,7 @@ const createAssistant = {
       const promise = z.request({
         method: 'POST',
         url: 'https://api.pinecone.io/assistant/assistants',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: getPostHeaders(bundle),
         body: {
           name: bundle.inputData.name,
           instructions: bundle.inputData.instructions,

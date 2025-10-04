@@ -36,7 +36,7 @@ const retrieveContext = {
         type: 'integer',
         label: 'Top K',
         helpText: 'Maximum number of context snippets to return (default: 16, max: 64)',
-        default: 16
+        default: '16'
       },
       {
         key: 'snippet_size',
@@ -44,7 +44,7 @@ const retrieveContext = {
         type: 'integer',
         label: 'Snippet Size',
         helpText: 'Maximum context snippet size in tokens (default: 2048, min: 512, max: 8192)',
-        default: 2048
+        default: '2048'
       },
       {
         key: 'filter',

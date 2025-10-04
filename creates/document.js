@@ -14,7 +14,8 @@ const uploadDocument = {
         required: true,
         type: 'string',
         label: 'Assistant ID',
-        helpText: 'The ID of the assistant to upload the document to'
+        helpText: 'The ID of the assistant to upload the document to',
+        dynamic: 'listAssistants.id.assistant_id'
       },
       {
         key: 'file',

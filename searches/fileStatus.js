@@ -21,7 +21,8 @@ const describeFile = {
         required: true,
         type: 'string',
         label: 'File ID',
-        helpText: 'The UUID of the file to describe'
+        helpText: 'The UUID of the file to describe',
+        dynamic: 'listFiles.id.file_id'
       },
       {
         key: 'include_url',
@@ -29,7 +30,7 @@ const describeFile = {
         type: 'boolean',
         label: 'Include Signed URL',
         helpText: 'Include the signed URL of the file in the response',
-        default: false
+        default: 'false'
       }
     ],
 
