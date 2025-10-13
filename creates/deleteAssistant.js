@@ -1,6 +1,6 @@
 const deleteAssistant = {
   key: 'deleteAssistant',
-  noun: 'Assistant',
+  noun: 'Delete Assistant',
 
   display: {
     label: 'Delete Assistant',
@@ -10,7 +10,7 @@ const deleteAssistant = {
   operation: {
     inputFields: [
       {
-        key: 'assistant_name',
+        key: 'name',
         required: true,
         type: 'string',
         label: 'Assistant Name',
@@ -21,20 +21,20 @@ const deleteAssistant = {
     perform: (z, bundle) => {
       const promise = z.request({
         method: 'DELETE',
-        url: `https://api.pinecone.io/assistant/assistants/${bundle.inputData.assistant_name}`
+        url: `https://api.pinecone.io/assistant/assistants/${bundle.inputData.name}`
       });
 
       return promise.then((response) => {
         return {
           success: true,
           message: 'Assistant deleted successfully',
-          assistant_name: bundle.inputData.assistant_name
+          name: bundle.inputData.name
         };
       });
     },
 
     sample: {
-      assistant_name: 'example-assistant'
+      name: 'example-assistant'
     }
   }
 };

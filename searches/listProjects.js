@@ -2,7 +2,7 @@ const { getAdminHeaders } = require('../utils/headers');
 
 const listProjects = {
   key: 'listProjects',
-  noun: 'Project',
+  noun: 'Project List',
 
   display: {
     label: 'List Projects',
@@ -10,6 +10,16 @@ const listProjects = {
   },
 
   operation: {
+    inputFields: [
+      {
+        key: 'name',
+        required: false,
+        type: 'string',
+        label: 'Project Name',
+        helpText: 'Filter projects by name (optional)'
+      }
+    ],
+
     perform: async (z, bundle) => {
       // Get access token using client credentials
       const tokenResponse = await z.request({
@@ -20,8 +30,8 @@ const listProjects = {
         },
         body: {
           grant_type: 'client_credentials',
-          client_id: bundle.inputData.client_id,
-          client_secret: bundle.inputData.client_secret,
+          client_id: bundle.inputData.client_id || bundle.authData.client_id,
+          client_secret: bundle.inputData.client_secret || bundle.authData.client_secret,
           audience: 'https://api.pinecone.io/'
         }
       });
@@ -44,22 +54,10 @@ const listProjects = {
       }));
     },
 
-    inputFields: [
-      {
-        key: 'client_id',
-        label: 'Client ID',
-        type: 'string',
-        required: true,
-        helpText: 'Your service account client ID.'
-      },
-      {
-        key: 'client_secret',
-        label: 'Client Secret',
-        type: 'password',
-        required: true,
-        helpText: 'Your service account client secret.'
-      }
-    ]
+    sample: {
+      name: 'my-pinecone-project',
+      id: 'project-12345'
+    }
   }
 };
 

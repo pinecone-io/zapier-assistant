@@ -1,6 +1,6 @@
 const describeAssistant = {
   key: 'assistantStatus',
-  noun: 'Assistant',
+  noun: 'Assistant Status',
 
   display: {
     label: 'Check Assistant Status',
@@ -10,7 +10,7 @@ const describeAssistant = {
   operation: {
     inputFields: [
       {
-        key: 'assistant_name',
+        key: 'name',
         required: true,
         type: 'string',
         label: 'Assistant Name',
@@ -21,11 +21,12 @@ const describeAssistant = {
     perform: (z, bundle) => {
       const promise = z.request({
         method: 'GET',
-        url: `https://api.pinecone.io/assistant/assistants/${bundle.inputData.assistant_name}`
+        url: `https://api.pinecone.io/assistant/assistants/${bundle.inputData.name}`
       });
 
       return promise.then((response) => {
-        return response.json;
+        // Zapier expects search results to be an array, so wrap the single assistant in an array
+        return [response.json];
       });
     },
 

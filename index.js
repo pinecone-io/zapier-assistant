@@ -4,9 +4,9 @@ const uploadDocument = require('./creates/document');
 const updateAssistant = require('./creates/updateAssistant');
 const deleteAssistant = require('./creates/deleteAssistant');
 const listProjects = require('./searches/listProjects');
-const listAssistants = require('./searches/assistant');
+const listAssistants = require('./searches/listAssistants');
 const describeAssistant = require('./searches/assistantStatus');
-const listFiles = require('./searches/files');
+const listFiles = require('./searches/listFiles');
 const describeFile = require('./searches/fileStatus');
 const chatAssistant = require('./searches/chat');
 const retrieveContext = require('./searches/context');
@@ -14,6 +14,8 @@ const evaluateAnswer = require('./searches/evaluate');
 const newAssistant = require('./triggers/newAssistant');
 const newFile = require('./triggers/newFile');
 const fileStatusChange = require('./triggers/fileStatusChange');
+const listFilesTrigger = require('./triggers/listFiles');
+const listAssistantsTrigger = require('./triggers/listAssistants');
 
 // To include the Authentication API Key header on all outbound requests, simply define the function here.
 // It runs runs before each request is sent out, allowing you to make tweaks to the request in a centralized spot
@@ -62,6 +64,8 @@ module.exports = {
   triggers: {
     [newAssistant.key]: newAssistant,
     [newFile.key]: newFile,
-    [fileStatusChange.key]: fileStatusChange
+    [fileStatusChange.key]: fileStatusChange,
+    [listFilesTrigger.key]: listFilesTrigger,
+    [listAssistantsTrigger.key]: listAssistantsTrigger
   }
 };

@@ -1,7 +1,7 @@
 {
-  "name": "zapier-assistant",
-  "version": "1.0.0",
-  "description": "A Zapier integration for Pinecone",
+  "name": "pinecone-assistant",
+  "version": "1.0.1",
+  "description": "Pinecone Assistant is a powerful AI assistant that can help you with your questions and tasks from your private documents.",
   "main": "index.js",
   "scripts": {
     "test": "node node_modules/.bin/zapier test"
@@ -9,12 +9,14 @@
   "keywords": [
     "zapier",
     "zapier-app",
-    "pinecone"
+    "pinecone",
+    "assistant"
   ],
   "author": "Pinecone",
   "license": "MIT",
   "dependencies": {
-    "zapier-platform-core": "15.0.0"
+    "form-data": "^4.0.4",
+    "zapier-platform-core": "17.7.2"
   },
   "devDependencies": {
     "zapier-platform-cli": "15.0.0"

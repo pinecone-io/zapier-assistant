@@ -1,6 +1,6 @@
 const retrieveContext = {
   key: 'context',
-  noun: 'Context',
+  noun: 'Context Result',
 
   display: {
     label: 'Retrieve Context Snippets',
@@ -80,15 +80,18 @@ const retrieveContext = {
 
       const promise = z.request({
         method: 'POST',
-        url: `https://api.pinecone.io/assistant/chat/${bundle.inputData.assistant_name}/context`,
+        url: `https://prod-1-data.ke.pinecone.io/assistant/chat/${bundle.inputData.assistant_name}/context`,
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Api-Key': bundle.authData.api_key,
+          'X-Pinecone-Api-Version': '2025-04',
+          'sourceTag': 'zapier:assistant'
         },
         body: body
       });
 
       return promise.then((response) => {
-        return response.json;
+        return [response.json];
       });
     },
 

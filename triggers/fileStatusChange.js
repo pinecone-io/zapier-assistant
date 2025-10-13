@@ -1,6 +1,6 @@
 const fileStatusChange = {
   key: 'fileStatusChange',
-  noun: 'File',
+  noun: 'File Status',
 
   display: {
     label: 'File Status Change',
@@ -36,7 +36,12 @@ const fileStatusChange = {
     perform: (z, bundle) => {
       const promise = z.request({
         method: 'GET',
-        url: `https://api.pinecone.io/assistant/files/${bundle.inputData.assistant_name}`
+        url: `https://prod-1-data.ke.pinecone.io/assistant/files/${bundle.inputData.assistant_name}`,
+        headers: {
+          'Api-Key': bundle.authData.api_key,
+          'X-Pinecone-Api-Version': '2025-04',
+          'sourceTag': 'zapier:assistant'
+        }
       });
 
       return promise.then((response) => {

@@ -1,6 +1,6 @@
 const updateAssistant = {
   key: 'updateAssistant',
-  noun: 'Assistant',
+  noun: 'Updated Assistant',
 
   display: {
     label: 'Update Assistant',
@@ -10,7 +10,7 @@ const updateAssistant = {
   operation: {
     inputFields: [
       {
-        key: 'assistant_name',
+        key: 'name',
         required: true,
         type: 'string',
         label: 'Assistant Name',
@@ -45,7 +45,7 @@ const updateAssistant = {
 
       const promise = z.request({
         method: 'PATCH',
-        url: `https://api.pinecone.io/assistant/assistants/${bundle.inputData.assistant_name}`,
+        url: `https://api.pinecone.io/assistant/assistants/${bundle.inputData.name}`,
         headers: {
           'Content-Type': 'application/json'
         },
@@ -58,7 +58,7 @@ const updateAssistant = {
     },
 
     sample: {
-      assistant_name: 'test-assistant',
+      name: 'test-assistant',
       instructions: 'Use American English for spelling and grammar.',
       metadata: '{"category": "support", "version": "2.0"}'
     }

@@ -2,7 +2,7 @@ const { getPostHeaders } = require('../utils/headers');
 
 const createAssistant = {
   key: 'assistant',
-  noun: 'Assistant',
+  noun: 'New Assistant',
 
   display: {
     label: 'Create Assistant',

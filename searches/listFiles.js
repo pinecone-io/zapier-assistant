@@ -1,14 +1,13 @@
-const newFile = {
-  key: 'newFile',
-  noun: 'New File',
+const listFiles = {
+  key: 'listFiles',
+  noun: 'File List',
 
   display: {
-    label: 'New File',
-    description: 'Triggers when a new file is uploaded to an assistant.'
+    label: 'List Files',
+    description: 'Lists all files uploaded to an assistant.'
   },
 
   operation: {
-    type: 'polling',
 
     inputFields: [
       {
@@ -16,7 +15,8 @@ const newFile = {
         required: true,
         type: 'string',
         label: 'Assistant Name',
-        helpText: 'The name of the assistant to monitor for new files'
+        helpText: 'The name of the assistant to list files for',
+        dynamic: 'listAssistants.id.name'
       }
     ],
 
@@ -34,21 +34,24 @@ const newFile = {
       return promise.then((response) => {
         const files = response.json.files || [];
         
-        // For polling triggers, we need to return only new items
-        // Since this is a simple implementation, we'll return all files
-        // In a real implementation, you'd want to track timestamps or IDs
+        // Return files with proper structure for dynamic dropdown
         return files.map(file => ({
           ...file,
           id: file.id, // Use file ID for deduplication
-          created_on: file.created_on
+          file_id: file.id, // Provide file_id field for dynamic connection
+          name: file.name,
+          status: file.status,
+          created_on: file.created_on,
+          updated_on: file.updated_on
         }));
       });
     },
 
     sample: {
       assistant_name: 'example-assistant',
-      name: 'document.pdf',
       id: '3c90c3cc-0d44-4b50-8888-8dd25736052a',
+      file_id: '3c90c3cc-0d44-4b50-8888-8dd25736052a',
+      name: 'document.pdf',
       metadata: {},
       created_on: '2023-11-07T05:31:56Z',
       updated_on: '2023-11-07T05:31:56Z',
@@ -60,4 +63,4 @@ const newFile = {
   }
 };
 
-module.exports = newFile;
+module.exports = listFiles;

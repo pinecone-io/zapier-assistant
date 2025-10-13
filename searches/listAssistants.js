@@ -1,21 +1,20 @@
 const listAssistants = {
-  key: 'assistant',
-  noun: 'Assistant',
+  key: 'listAssistants',
+  noun: 'Assistant List',
 
   display: {
     label: 'List Assistants',
-    description: 'Lists all available assistants in your project.'
+    description: 'Lists all assistants in your project.'
   },
 
   operation: {
     inputFields: [
       {
-        key: 'limit',
+        key: 'name',
         required: false,
-        type: 'integer',
-        label: 'Limit',
-        helpText: 'Maximum number of assistants to return',
-        default: '50'
+        type: 'string',
+        label: 'Assistant Name',
+        helpText: 'Filter assistants by name (optional)'
       }
     ],
 
@@ -27,15 +26,25 @@ const listAssistants = {
 
       return promise.then((response) => {
         const assistants = response.json.assistants || [];
+        
+        // Return assistants with proper structure for dynamic dropdown
         return assistants.map(assistant => ({
-          id: assistant.name,
-          label: assistant.name
+          ...assistant,
+          id: assistant.name, // Use name as ID for deduplication
+          assistant_id: assistant.name, // Provide assistant_id field for dynamic connection
+          name: assistant.name,
+          instructions: assistant.instructions,
+          status: assistant.status,
+          created_at: assistant.created_at,
+          updated_at: assistant.updated_at
         }));
       });
     },
 
     sample: {
       name: 'example-assistant',
+      id: 'example-assistant',
+      assistant_id: 'example-assistant',
       instructions: 'You are a helpful assistant that answers questions based on provided documentation.',
       metadata: {},
       status: 'Ready',
