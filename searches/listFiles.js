@@ -1,14 +1,13 @@
-const fileStatusChange = {
-  key: 'fileStatusChange',
-  noun: 'File Status',
+const listFiles = {
+  key: 'listFiles',
+  noun: 'File List',
 
   display: {
-    label: 'File Status Change',
-    description: 'Triggers when a file\'s processing status changes (e.g., Processing → Available, Processing → Failed).'
+    label: 'List Files',
+    description: 'Lists all files uploaded to an assistant.'
   },
 
   operation: {
-    type: 'polling',
 
     inputFields: [
       {
@@ -16,20 +15,8 @@ const fileStatusChange = {
         required: true,
         type: 'string',
         label: 'Assistant Name',
-        helpText: 'The name of the assistant to monitor for file status changes'
-      },
-      {
-        key: 'status_filter',
-        required: false,
-        type: 'string',
-        label: 'Status Filter',
-        helpText: 'Only trigger for specific status changes (e.g., Available, Failed, Processing)',
-        choices: {
-          'Processing': 'Processing',
-          'Available': 'Available',
-          'ProcessingFailed': 'Processing Failed',
-          'Deleting': 'Deleting'
-        }
+        helpText: 'The name of the assistant to list files for',
+        dynamic: 'listAssistants.id.name'
       }
     ],
 
@@ -47,19 +34,12 @@ const fileStatusChange = {
       return promise.then((response) => {
         const files = response.json.files || [];
         
-        // Filter files by status if specified
-        let filteredFiles = files;
-        if (bundle.inputData.status_filter) {
-          filteredFiles = files.filter(file => file.status === bundle.inputData.status_filter);
-        }
-        
-        // For polling triggers, we need to return only items with status changes
-        // Since this is a simple implementation, we'll return all files matching the filter
-        // In a real implementation, you'd want to track previous statuses
-        return filteredFiles.map(file => ({
+        // Return files with proper structure for dynamic dropdown
+        return files.map(file => ({
           ...file,
           id: file.id, // Use file ID for deduplication
           file_id: file.id, // Provide file_id field for dynamic connection
+          name: file.name,
           status: file.status,
           created_on: file.created_on,
           updated_on: file.updated_on
@@ -69,7 +49,6 @@ const fileStatusChange = {
 
     sample: {
       assistant_name: 'example-assistant',
-      status_filter: 'Available',
       id: '3c90c3cc-0d44-4b50-8888-8dd25736052a',
       file_id: '3c90c3cc-0d44-4b50-8888-8dd25736052a',
       name: 'document.pdf',
@@ -84,4 +63,4 @@ const fileStatusChange = {
   }
 };
 
-module.exports = fileStatusChange;
+module.exports = listFiles;

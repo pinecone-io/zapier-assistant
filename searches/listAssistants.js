@@ -1,36 +1,40 @@
-const newAssistant = {
-  key: 'newAssistant',
-  noun: 'New Assistant',
+const listAssistants = {
+  key: 'listAssistants',
+  noun: 'Assistant List',
 
   display: {
-    label: 'New Assistant',
-    description: 'Triggers when a new assistant is created.'
+    label: 'List Assistants',
+    description: 'Lists all assistants in your project.'
   },
 
   operation: {
-    type: 'polling',
+    inputFields: [
+      {
+        key: 'name',
+        required: false,
+        type: 'string',
+        label: 'Assistant Name',
+        helpText: 'Filter assistants by name (optional)'
+      }
+    ],
 
     perform: (z, bundle) => {
       const promise = z.request({
         method: 'GET',
-        url: 'https://api.pinecone.io/assistant/assistants',
-        headers: {
-          'Api-Key': bundle.authData.api_key,
-          'X-Pinecone-Api-Version': '2025-04',
-          'User-Agent': 'source_tag=zapier:assistant'
-        }
+        url: 'https://api.pinecone.io/assistant/assistants'
       });
 
       return promise.then((response) => {
         const assistants = response.json.assistants || [];
         
-        // For polling triggers, we need to return only new items
-        // Since this is a simple implementation, we'll return all assistants
-        // In a real implementation, you'd want to track timestamps or IDs
+        // Return assistants with proper structure for dynamic dropdown
         return assistants.map(assistant => ({
           ...assistant,
           id: assistant.name, // Use name as ID for deduplication
           assistant_id: assistant.name, // Provide assistant_id field for dynamic connection
+          name: assistant.name,
+          instructions: assistant.instructions,
+          status: assistant.status,
           created_at: assistant.created_at,
           updated_at: assistant.updated_at
         }));
@@ -38,9 +42,9 @@ const newAssistant = {
     },
 
     sample: {
+      name: 'example-assistant',
       id: 'example-assistant',
       assistant_id: 'example-assistant',
-      name: 'example-assistant',
       instructions: 'You are a helpful assistant that answers questions based on provided documentation.',
       metadata: {},
       status: 'Ready',
@@ -51,4 +55,4 @@ const newAssistant = {
   }
 };
 
-module.exports = newAssistant;
+module.exports = listAssistants;

@@ -1,6 +1,6 @@
 const evaluateAnswer = {
   key: 'evaluate',
-  noun: 'Evaluation',
+  noun: 'Evaluation Result',
 
   display: {
     label: 'Evaluate Answer',
@@ -49,7 +49,7 @@ const evaluateAnswer = {
       });
 
       return promise.then((response) => {
-        return response.json;
+        return [response.json];
       });
     },
 

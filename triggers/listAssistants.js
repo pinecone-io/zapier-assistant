@@ -1,10 +1,10 @@
-const newAssistant = {
-  key: 'newAssistant',
-  noun: 'New Assistant',
+const listAssistants = {
+  key: 'listAssistants',
+  noun: 'Assistant List',
 
   display: {
-    label: 'New Assistant',
-    description: 'Triggers when a new assistant is created.'
+    label: 'List Assistants',
+    description: 'Triggers when listing all assistants in your account.'
   },
 
   operation: {
@@ -24,13 +24,14 @@ const newAssistant = {
       return promise.then((response) => {
         const assistants = response.json.assistants || [];
         
-        // For polling triggers, we need to return only new items
-        // Since this is a simple implementation, we'll return all assistants
-        // In a real implementation, you'd want to track timestamps or IDs
+        // Return assistants with proper structure for dynamic dropdown
         return assistants.map(assistant => ({
           ...assistant,
           id: assistant.name, // Use name as ID for deduplication
           assistant_id: assistant.name, // Provide assistant_id field for dynamic connection
+          name: assistant.name,
+          instructions: assistant.instructions,
+          status: assistant.status,
           created_at: assistant.created_at,
           updated_at: assistant.updated_at
         }));
@@ -51,4 +52,4 @@ const newAssistant = {
   }
 };
 
-module.exports = newAssistant;
+module.exports = listAssistants;

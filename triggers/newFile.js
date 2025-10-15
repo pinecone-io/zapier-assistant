@@ -1,6 +1,6 @@
 const newFile = {
   key: 'newFile',
-  noun: 'File',
+  noun: 'New File',
 
   display: {
     label: 'New File',
@@ -8,7 +8,7 @@ const newFile = {
   },
 
   operation: {
-    type: 'poll',
+    type: 'polling',
 
     inputFields: [
       {
@@ -23,7 +23,12 @@ const newFile = {
     perform: (z, bundle) => {
       const promise = z.request({
         method: 'GET',
-        url: `https://api.pinecone.io/assistant/files/${bundle.inputData.assistant_name}`
+        url: `https://prod-1-data.ke.pinecone.io/assistant/files/${bundle.inputData.assistant_name}`,
+        headers: {
+          'Api-Key': bundle.authData.api_key,
+          'X-Pinecone-Api-Version': '2025-04',
+          'User-Agent': 'source_tag=zapier:assistant'
+        }
       });
 
       return promise.then((response) => {
@@ -35,15 +40,18 @@ const newFile = {
         return files.map(file => ({
           ...file,
           id: file.id, // Use file ID for deduplication
-          created_on: file.created_on
+          file_id: file.id, // Provide file_id field for dynamic connection
+          created_on: file.created_on,
+          updated_on: file.updated_on
         }));
       });
     },
 
     sample: {
       assistant_name: 'example-assistant',
-      name: 'document.pdf',
       id: '3c90c3cc-0d44-4b50-8888-8dd25736052a',
+      file_id: '3c90c3cc-0d44-4b50-8888-8dd25736052a',
+      name: 'document.pdf',
       metadata: {},
       created_on: '2023-11-07T05:31:56Z',
       updated_on: '2023-11-07T05:31:56Z',

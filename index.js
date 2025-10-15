@@ -1,11 +1,13 @@
 const authentication = require('./authentication');
 const createAssistant = require('./creates/assistant');
+const searchOrCreateAssistant = require('./creates/searchOrCreateAssistant');
 const uploadDocument = require('./creates/document');
 const updateAssistant = require('./creates/updateAssistant');
 const deleteAssistant = require('./creates/deleteAssistant');
-const listAssistants = require('./searches/assistant');
+const listProjects = require('./searches/listProjects');
+const listAssistants = require('./searches/listAssistants');
 const describeAssistant = require('./searches/assistantStatus');
-const listFiles = require('./searches/files');
+const listFiles = require('./searches/listFiles');
 const describeFile = require('./searches/fileStatus');
 const chatAssistant = require('./searches/chat');
 const retrieveContext = require('./searches/context');
@@ -13,6 +15,8 @@ const evaluateAnswer = require('./searches/evaluate');
 const newAssistant = require('./triggers/newAssistant');
 const newFile = require('./triggers/newFile');
 const fileStatusChange = require('./triggers/fileStatusChange');
+const listFilesTrigger = require('./triggers/listFiles');
+const listAssistantsTrigger = require('./triggers/listAssistants');
 
 // To include the Authentication API Key header on all outbound requests, simply define the function here.
 // It runs runs before each request is sent out, allowing you to make tweaks to the request in a centralized spot
@@ -39,6 +43,7 @@ module.exports = {
 
   // If you want to define a search to go along with your creates...
   searches: {
+    [listProjects.key]: listProjects,
     [listAssistants.key]: listAssistants,
     [describeAssistant.key]: describeAssistant,
     [listFiles.key]: listFiles,
@@ -51,6 +56,7 @@ module.exports = {
   // If you want to define a create to go along with your searches...
   creates: {
     [createAssistant.key]: createAssistant,
+    [searchOrCreateAssistant.key]: searchOrCreateAssistant,
     [uploadDocument.key]: uploadDocument,
     [updateAssistant.key]: updateAssistant,
     [deleteAssistant.key]: deleteAssistant
@@ -60,6 +66,8 @@ module.exports = {
   triggers: {
     [newAssistant.key]: newAssistant,
     [newFile.key]: newFile,
-    [fileStatusChange.key]: fileStatusChange
+    [fileStatusChange.key]: fileStatusChange,
+    [listFilesTrigger.key]: listFilesTrigger,
+    [listAssistantsTrigger.key]: listAssistantsTrigger
   }
 };

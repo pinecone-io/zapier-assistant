@@ -1,6 +1,6 @@
 const describeFile = {
   key: 'fileStatus',
-  noun: 'File',
+  noun: 'File Status',
 
   display: {
     label: 'Describe File',
@@ -14,14 +14,16 @@ const describeFile = {
         required: true,
         type: 'string',
         label: 'Assistant Name',
-        helpText: 'The name of the assistant that contains the file'
+        helpText: 'The name of the assistant that contains the file',
+        dynamic: 'listAssistants.id.name'
       },
       {
         key: 'file_id',
         required: true,
         type: 'string',
         label: 'File ID',
-        helpText: 'The UUID of the file to describe'
+        helpText: 'The UUID of the file to describe',
+        dynamic: 'listFiles.id.file_id'
       },
       {
         key: 'include_url',
@@ -29,7 +31,7 @@ const describeFile = {
         type: 'boolean',
         label: 'Include Signed URL',
         helpText: 'Include the signed URL of the file in the response',
-        default: false
+        default: 'false'
       }
     ],
 
@@ -41,12 +43,17 @@ const describeFile = {
 
       const promise = z.request({
         method: 'GET',
-        url: `https://api.pinecone.io/assistant/files/${bundle.inputData.assistant_name}/${bundle.inputData.file_id}`,
+        url: `https://prod-1-data.ke.pinecone.io/assistant/files/${bundle.inputData.assistant_name}/${bundle.inputData.file_id}`,
+        headers: {
+          'Api-Key': bundle.authData.api_key,
+          'X-Pinecone-Api-Version': '2025-04',
+          'User-Agent': 'source_tag=zapier:assistant'
+        },
         params: params
       });
 
       return promise.then((response) => {
-        return response.json;
+        return [response.json];
       });
     },
 

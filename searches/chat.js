@@ -1,9 +1,9 @@
 const chatAssistant = {
   key: 'chat',
-  noun: 'Chat',
+  noun: 'Chat Response',
 
   display: {
-    label: 'Chat with Assistant',
+    label: 'Chat With Assistant',
     description: 'Chat with an assistant and get back citations in structured form.'
   },
 
@@ -45,7 +45,7 @@ const chatAssistant = {
         type: 'number',
         label: 'Temperature',
         helpText: 'Controls randomness: 0 = deterministic, higher = more creative',
-        default: 0
+        default: '0'
       },
       {
         key: 'stream',
@@ -53,7 +53,7 @@ const chatAssistant = {
         type: 'boolean',
         label: 'Stream Response',
         helpText: 'If true, returns a stream of responses',
-        default: false
+        default: 'false'
       },
       {
         key: 'json_response',
@@ -61,7 +61,7 @@ const chatAssistant = {
         type: 'boolean',
         label: 'JSON Response',
         helpText: 'If true, assistant will return a JSON response',
-        default: false
+        default: 'false'
       },
       {
         key: 'include_highlights',
@@ -69,7 +69,7 @@ const chatAssistant = {
         type: 'boolean',
         label: 'Include Highlights',
         helpText: 'If true, returns highlights from referenced documents',
-        default: false
+        default: 'false'
       },
       {
         key: 'filter',
@@ -112,15 +112,18 @@ const chatAssistant = {
 
       const promise = z.request({
         method: 'POST',
-        url: `https://api.pinecone.io/assistant/chat/${bundle.inputData.assistant_name}`,
+        url: `https://prod-1-data.ke.pinecone.io/assistant/chat/${bundle.inputData.assistant_name}`,
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Api-Key': bundle.authData.api_key,
+          'X-Pinecone-Api-Version': '2025-04',
+          'User-Agent': 'source_tag=zapier:assistant'
         },
         body: body
       });
 
       return promise.then((response) => {
-        return response.json;
+        return [response.json];
       });
     },
 

@@ -1,3 +1,19 @@
+const http = require('https'); // require('http') if your URL is not https
+
+const FormData = require('form-data');
+
+const makeDownloadStream = (url, z) =>
+  new Promise((resolve, reject) => {
+    http
+      .request(url, (res) => {
+        // We can risk missing the first n bytes if we don't pause!
+        res.pause();
+        resolve(res);
+      })
+      .on('error', reject)
+      .end();
+  });
+
 const uploadDocument = {
   key: 'document',
   noun: 'Document',
@@ -10,11 +26,12 @@ const uploadDocument = {
   operation: {
     inputFields: [
       {
-        key: 'assistant_id',
+        key: 'name',
         required: true,
         type: 'string',
-        label: 'Assistant ID',
-        helpText: 'The ID of the assistant to upload the document to'
+        label: 'Assistant Name',
+        helpText: 'The name of the assistant to upload the document to',
+        dynamic: 'listAssistants.id.name'
       },
       {
         key: 'file',
@@ -22,6 +39,13 @@ const uploadDocument = {
         type: 'file',
         label: 'Document File',
         helpText: 'The document file to upload (PDF, TXT, DOCX, etc.)'
+      },
+      {
+        key: 'filename',
+        required: true,
+        type: 'string',
+        label: 'Filename',
+        helpText: 'The filename for the uploaded document'
       },
       {
         key: 'metadata',
@@ -32,32 +56,39 @@ const uploadDocument = {
       }
     ],
 
-    perform: (z, bundle) => {
-      // Create form data for file upload
-      const formData = new FormData();
-      formData.append('file', bundle.inputData.file);
+    perform: async (z, bundle) => {
+      // Follow the exact Zapier example pattern
+      // bundle.inputData.file will be a URL where the file data can be downloaded from
+      const stream = await makeDownloadStream(bundle.inputData.file, z);
+
+      const form = new FormData();
+      form.append('file', stream, bundle.inputData.filename);
       
       if (bundle.inputData.metadata) {
-        formData.append('metadata', bundle.inputData.metadata);
+        form.append('metadata', bundle.inputData.metadata);
       }
 
-      const promise = z.request({
+      // All set! Resume the stream
+      stream.resume();
+
+      const response = await z.request({
+        url: `https://prod-1-data.ke.pinecone.io/assistant/files/${bundle.inputData.name}`,
         method: 'POST',
-        url: `https://api.pinecone.io/assistant/assistants/${bundle.inputData.assistant_id}/files`,
+        body: form,
         headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        body: formData
+          'Api-Key': bundle.authData.api_key,
+          'X-Pinecone-Api-Version': '2025-04',
+          'User-Agent': 'source_tag=zapier:assistant'
+        }
       });
 
-      return promise.then((response) => {
-        return response.json;
-      });
+      return response.data;
     },
 
     sample: {
-      assistant_id: 'asst_1234567890',
+      name: 'asst_1234567890',
       file: 'document.pdf',
+      filename: 'document.pdf',
       metadata: '{"category": "support", "version": "1.0"}'
     }
   }

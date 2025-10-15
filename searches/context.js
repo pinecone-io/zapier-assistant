@@ -1,6 +1,6 @@
 const retrieveContext = {
   key: 'context',
-  noun: 'Context',
+  noun: 'Context Result',
 
   display: {
     label: 'Retrieve Context Snippets',
@@ -36,7 +36,7 @@ const retrieveContext = {
         type: 'integer',
         label: 'Top K',
         helpText: 'Maximum number of context snippets to return (default: 16, max: 64)',
-        default: 16
+        default: '16'
       },
       {
         key: 'snippet_size',
@@ -44,7 +44,7 @@ const retrieveContext = {
         type: 'integer',
         label: 'Snippet Size',
         helpText: 'Maximum context snippet size in tokens (default: 2048, min: 512, max: 8192)',
-        default: 2048
+        default: '2048'
       },
       {
         key: 'filter',
@@ -80,15 +80,18 @@ const retrieveContext = {
 
       const promise = z.request({
         method: 'POST',
-        url: `https://api.pinecone.io/assistant/chat/${bundle.inputData.assistant_name}/context`,
+        url: `https://prod-1-data.ke.pinecone.io/assistant/chat/${bundle.inputData.assistant_name}/context`,
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Api-Key': bundle.authData.api_key,
+          'X-Pinecone-Api-Version': '2025-04',
+          'User-Agent': 'source_tag=zapier:assistant'
         },
         body: body
       });
 
       return promise.then((response) => {
-        return response.json;
+        return [response.json];
       });
     },
 
