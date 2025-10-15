@@ -1,5 +1,6 @@
 const authentication = require('./authentication');
 const createAssistant = require('./creates/assistant');
+const searchOrCreateAssistant = require('./creates/searchOrCreateAssistant');
 const uploadDocument = require('./creates/document');
 const updateAssistant = require('./creates/updateAssistant');
 const deleteAssistant = require('./creates/deleteAssistant');
@@ -55,6 +56,7 @@ module.exports = {
   // If you want to define a create to go along with your searches...
   creates: {
     [createAssistant.key]: createAssistant,
+    [searchOrCreateAssistant.key]: searchOrCreateAssistant,
     [uploadDocument.key]: uploadDocument,
     [updateAssistant.key]: updateAssistant,
     [deleteAssistant.key]: deleteAssistant

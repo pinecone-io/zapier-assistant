@@ -13,7 +13,12 @@ const newAssistant = {
     perform: (z, bundle) => {
       const promise = z.request({
         method: 'GET',
-        url: 'https://api.pinecone.io/assistant/assistants'
+        url: 'https://api.pinecone.io/assistant/assistants',
+        headers: {
+          'Api-Key': bundle.authData.api_key,
+          'X-Pinecone-Api-Version': '2025-04',
+          'User-Agent': 'source_tag=zapier:assistant'
+        }
       });
 
       return promise.then((response) => {
@@ -25,20 +30,23 @@ const newAssistant = {
         return assistants.map(assistant => ({
           ...assistant,
           id: assistant.name, // Use name as ID for deduplication
-          created_at: assistant.created_at
+          assistant_id: assistant.name, // Provide assistant_id field for dynamic connection
+          created_at: assistant.created_at,
+          updated_at: assistant.updated_at
         }));
       });
     },
 
     sample: {
+      id: 'example-assistant',
+      assistant_id: 'example-assistant',
       name: 'example-assistant',
       instructions: 'You are a helpful assistant that answers questions based on provided documentation.',
       metadata: {},
       status: 'Ready',
       host: 'us-east-1',
       created_at: '2023-11-07T05:31:56Z',
-      updated_at: '2023-11-07T05:31:56Z',
-      id: 'example-assistant'
+      updated_at: '2023-11-07T05:31:56Z'
     }
   }
 };

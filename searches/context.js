@@ -85,7 +85,7 @@ const retrieveContext = {
           'Content-Type': 'application/json',
           'Api-Key': bundle.authData.api_key,
           'X-Pinecone-Api-Version': '2025-04',
-          'sourceTag': 'zapier:assistant'
+          'User-Agent': 'source_tag=zapier:assistant'
         },
         body: body
       });

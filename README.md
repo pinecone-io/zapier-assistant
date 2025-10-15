@@ -1,6 +1,6 @@
-# Zapier Assistant
+# Pinecone Assistant Integration
 
-A Zapier integration for Pinecone Assistant.
+A powerful AI assistant integration for Pinecone Assistant.
 
 ## Setup
 
@@ -40,7 +40,7 @@ You'll need a Pinecone API key to use this integration. You can find this in you
 
 ## Development
 
-This integration follows the standard Zapier app structure:
+This integration follows the standard app structure:
 
 - `index.js` - Main app configuration
 - `authentication.js` - Authentication configuration

@@ -47,7 +47,7 @@ const describeFile = {
         headers: {
           'Api-Key': bundle.authData.api_key,
           'X-Pinecone-Api-Version': '2025-04',
-          'sourceTag': 'zapier:assistant'
+          'User-Agent': 'source_tag=zapier:assistant'
         },
         params: params
       });

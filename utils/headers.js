@@ -11,7 +11,7 @@ const getPostHeaders = (bundle) => {
   return {
     'Content-Type': 'application/json',
     'X-Pinecone-Api-Version': '2025-04',
-    'sourceTag': 'zapier:assistant',
+    'User-Agent': 'source_tag=zapier:assistant',
     'Api-Key': bundle.authData.api_key
   };
 };
@@ -24,7 +24,7 @@ const getPostHeaders = (bundle) => {
 const getGetHeaders = (bundle) => {
   return {
     'X-Pinecone-Api-Version': '2025-04',
-    'sourceTag': 'zapier:assistant',
+    'User-Agent': 'source_tag=zapier:assistant',
     'Api-Key': bundle.authData.api_key
   };
 };

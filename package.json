@@ -7,10 +7,10 @@
     "test": "node node_modules/.bin/zapier test"
   },
   "keywords": [
-    "zapier",
-    "zapier-app",
     "pinecone",
-    "assistant"
+    "assistant",
+    "ai",
+    "automation"
   ],
   "author": "Pinecone",
   "license": "MIT",

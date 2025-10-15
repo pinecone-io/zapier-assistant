@@ -13,7 +13,12 @@ const listAssistants = {
     perform: (z, bundle) => {
       const promise = z.request({
         method: 'GET',
-        url: 'https://api.pinecone.io/assistant/assistants'
+        url: 'https://api.pinecone.io/assistant/assistants',
+        headers: {
+          'Api-Key': bundle.authData.api_key,
+          'X-Pinecone-Api-Version': '2025-04',
+          'User-Agent': 'source_tag=zapier:assistant'
+        }
       });
 
       return promise.then((response) => {

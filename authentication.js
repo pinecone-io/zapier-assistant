@@ -2,7 +2,7 @@ const { getAdminHeaders, getAdminPostHeaders, getGetHeaders } = require('./utils
 
 const authentication = {
   type: 'custom',
-  connectionLabel: 'Pinecone Assistant',
+  connectionLabel: 'Pinecone Assistant Account',
   test: async (z, bundle) => {
     // Test the API key by listing assistants
     const testResponse = await z.request({
@@ -11,7 +11,7 @@ const authentication = {
       headers: {
         'Api-Key': bundle.inputData.api_key,
         'X-Pinecone-Api-Version': '2025-04',
-        'sourceTag': 'zapier:assistant'
+        'User-Agent': 'source_tag=zapier:assistant'
       }
     });
 
