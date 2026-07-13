@@ -13,7 +13,7 @@
     "automation"
   ],
   "author": "Pinecone",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "dependencies": {
     "form-data": "^4.0.4",
     "zapier-platform-core": "17.7.2"
