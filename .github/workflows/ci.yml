@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: install & smoke (node ${{ matrix.node-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: ['22.x', '24.x']
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+      - run: npm ci
+      - name: Smoke-load app entrypoint
+        run: node -e "require('./index.js'); console.log('index.js loaded OK')"
+
+  # NOTE: `npm test` runs `zapier-platform test`, which requires the Zapier CLI
+  # environment/credentials (and Node >= 22) and cannot run in plain CI, so it is
+  # intentionally not wired as a job here. The install & smoke job above is the
+  # merge gate; run `npm test` locally with a Zapier deploy key.
+
+  audit:
+    name: npm audit (non-blocking)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22.x'
+          cache: npm
+      - run: npm ci
+      - run: npm audit --audit-level=moderate
