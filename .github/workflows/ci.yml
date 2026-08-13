@@ -27,22 +27,10 @@ jobs:
       - name: Smoke-load app entrypoint
         run: node -e "require('./index.js'); console.log('index.js loaded OK')"
 
-  test:
-    name: zapier-platform test
-    runs-on: ubuntu-latest
-    # The Zapier CLI test harness needs the Zapier environment/credentials, so
-    # this job is informational and does not gate merges.
-    continue-on-error: true
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-          cache: npm
-      - run: npm ci
-      - name: Run tests
-        timeout-minutes: 10
-        run: npm test
+  # NOTE: `npm test` runs `zapier-platform test`, which requires the Zapier CLI
+  # environment/credentials (and Node >= 22) and cannot run in plain CI, so it is
+  # intentionally not wired as a job here. The install & smoke job above is the
+  # merge gate; run `npm test` locally with a Zapier deploy key.
 
   audit:
     name: npm audit (non-blocking)
