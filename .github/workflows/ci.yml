@@ -33,9 +33,8 @@ jobs:
   # merge gate; run `npm test` locally with a Zapier deploy key.
 
   audit:
-    name: npm audit (non-blocking)
+    name: npm audit (fail on high or critical)
     runs-on: ubuntu-latest
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -43,4 +42,4 @@ jobs:
           node-version: '22.x'
           cache: npm
       - run: npm ci
-      - run: npm audit --audit-level=moderate
+      - run: npm audit --audit-level=high
