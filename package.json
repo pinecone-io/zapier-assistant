@@ -19,7 +19,7 @@
     "zapier-platform-core": "17.7.2"
   },
   "devDependencies": {
-    "zapier-platform-cli": "^19.0.0"
+    "zapier-platform-cli": "^19.2.0"
   },
   "overrides": {
     "form-data": "^4.0.6",
