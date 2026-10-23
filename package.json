@@ -16,7 +16,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "form-data": "^4.0.6",
-    "zapier-platform-core": "17.7.2"
+    "zapier-platform-core": "19.2.1"
   },
   "devDependencies": {
     "zapier-platform-cli": "^19.0.0"
